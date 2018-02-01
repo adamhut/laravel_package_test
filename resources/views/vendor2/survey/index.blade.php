@@ -1,0 +1,1 @@
+<p>The is from default view under resources</p>
