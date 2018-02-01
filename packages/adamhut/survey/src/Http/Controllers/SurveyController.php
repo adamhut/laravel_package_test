@@ -14,8 +14,9 @@ class SurveyController extends Controller
 
     public function index()
     {
-        return view('survey::index');
-        
+        $audits = Audit::paginate(10);
+        return view('survey::index',compact('audits'));
+
     }
 
     public function store(Request $request)
@@ -23,10 +24,11 @@ class SurveyController extends Controller
         $data= request()->validate([
             'name'=>'required|min:3',
         ]);
-        
+
         Audit::create([
             'name'=>$request->input('name'),
             'is_published' => !!$request->input('published'),
+            'is_archived' => !!$request->input('archived'),
             'user_id'   => 1,
             'checklist_id' => 1,
         ]);
@@ -35,6 +37,20 @@ class SurveyController extends Controller
     }
 
     public function  create()
+    {
+        return view('survey::add');
+    }
+
+    public function show(Audit $audit)
+    {
+        if($audit->isPublished=="0")
+        {
+            abort(403,'permission Denied');
+        }
+        return view('survey::show',compact('audit'));
+    }
+
+    public function destroy($audit)
     {
         return view('survey::add');
     }

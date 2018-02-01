@@ -19,7 +19,7 @@ class CreateAuditTable extends Migration
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('checklist_id');
             $table->boolean('is_published');
-          
+            $table->boolean('is_archived');
             $table->timestamps();
         });
     }

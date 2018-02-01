@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAuditTable extends Migration
+class CreateChecklistItemsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class CreateAuditTable extends Migration
      */
     public function up()
     {
-        Schema::create('audits', function (Blueprint $table) {
+        Schema::create('checklist_items', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->unsignedInteger('user_id');
-            $table->unsignedInteger('checklist_id');
-            $table->boolean('is_published');
-            $table->boolean('is_archived');
+            $table->string('description');
+            $table->boolean('correct_answer')->default(false);
+            $table->boolean('is_archived')->default(false);
+            $table->unsignedInteger('audit_id');
             $table->timestamps();
         });
     }
@@ -31,6 +30,6 @@ class CreateAuditTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('audits');
+        Schema::dropIfExists('checklist_items');
     }
 }
